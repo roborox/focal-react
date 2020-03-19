@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/roborox/focal-react/compare/v1.0.1...v1.1.0) (2020-03-19)
+
+
+### Features
+
+* add new props for infinite list ([6f03585](https://github.com/roborox/focal-react/commit/6f03585c9b00a5132cac4ad2514289d1f633195d))
+
 ## [1.0.1](https://github.com/roborox/focal-react/compare/v1.0.0...v1.0.1) (2020-03-18)
 
 
