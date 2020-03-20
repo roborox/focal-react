@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/roborox/focal-react/compare/v1.1.0...v1.1.1) (2020-03-20)
+
+
+### Bug Fixes
+
+* fix Loader test, getInitialState implemented ([1040a1d](https://github.com/roborox/focal-react/commit/1040a1dd967527ab5af64450e79873c2fd98be70))
+
 # [1.1.0](https://github.com/roborox/focal-react/compare/v1.0.1...v1.1.0) (2020-03-19)
 
 
