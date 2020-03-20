@@ -13,11 +13,13 @@ export interface LoaderProps {
 	children: React.ReactNode
 }
 
-export function Loader({ children, status, onError, ...restProps }: LoaderProps): React.ReactElement {
+export function Loader({ children, status, onError, error, idle, loading }: LoaderProps): React.ReactElement {
 	const rx = useMemo(() => caseWhen(status, {
 		success: children,
-		...restProps,
-	}), [status, children, Object.values(restProps)])
+		idle,
+		loading,
+		error,
+	}), [status, children, error, idle, loading])
 
 	useEffect(() => {
 		if (onError) {
