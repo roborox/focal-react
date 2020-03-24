@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/roborox/focal-react/compare/v1.1.1...v1.2.0) (2020-03-24)
+
+
+### Features
+
+* add useSubscription, useSyncSubject, update InfiniteList ([a7200f0](https://github.com/roborox/focal-react/commit/a7200f0b4f93523c3bc82847113f9638ece6d125))
+
 ## [1.1.1](https://github.com/roborox/focal-react/compare/v1.1.0...v1.1.1) (2020-03-20)
 
 
