@@ -2,7 +2,7 @@ import React from "react"
 import { fireEvent, render } from "@testing-library/react"
 import { Atom, reactiveList } from "@grammarly/focal"
 import { act } from "react-dom/test-utils"
-import { Observable, Subject } from "rxjs"
+import { Observable, Subject, ReplaySubject } from "rxjs"
 import { QueueingSubject } from "queueing-subject"
 import { first, map } from "rxjs/operators"
 import { InfiniteList } from "./index"
@@ -11,44 +11,47 @@ import { range } from "../../test/utils/range"
 import { InfiniteListState, listStateIdle } from "./domain"
 import { Rx } from "../rx"
 
-const Renderable = ({ loader, state }: {
-	loader: ListPartLoader<number, number>
+const Renderable = ({ loader, state, loadNext }: {
+	loader: ListPartLoader<number, number>,
+	loadNext: ReplaySubject<() => Promise<void>>,
 	state: Atom<InfiniteListState<number, number>>
 }) => (
 	<InfiniteList
 		state={state}
+		loadNext={loadNext}
 		error={(error, reload) => (
-			<button data-error={(error as Error).message} onClick={reload} data-testid="reload">reload</button>
+			<button data-error={(error as Error).message} onClick={reload} data-testid="reload">
+				reload
+			</button>
 		)}
 		loader={loader}
 		loading={<span data-testid="loading">loading</span>}
 	>
-		{load =>
-			<>
+		{(load) =>
+			<section>
 				<Rx value={reactiveList(state.view("items"), x =>
 					<span key={x} data-testid={`item_${x}`}>{x}</span>,
 				)}>
 					{(renderable) => <div>{renderable}</div>}
 				</Rx>
-				<button data-testid="next" onClick={load}>
-					next
-				</button>
+				<button data-testid="next" onClick={load}>next</button>
 				<Rx value={state.pipe(map(({ status }) => status))}>
 					{t => <span data-testid="status">{t.status}</span>}
 				</Rx>
-			</>
+			</section>
 		}
 	</InfiniteList>
 )
 
 type RequestData = [number | null, Subject<[number[], number]>]
 
+const perPage = 5
 async function sendNextPage(requests: Observable<RequestData>) {
 	const [page, subject] = await requests.pipe(first()).toPromise()
 	const startPage = page || 0
 	subject.next([
-		range(startPage, startPage + 5),
-		startPage + 5,
+		range(startPage, startPage + perPage),
+		startPage + perPage,
 	])
 }
 
@@ -74,13 +77,15 @@ describe("InfiniteList", () => {
 	test("should load first page at start and then other pages", async () => {
 		expect.assertions(8)
 		const requests = new QueueingSubject<RequestData>()
+		const loadNext = new ReplaySubject<() => Promise<void>>()
 		const partLoader: ListPartLoader<number, number> = createPartLoader(requests)
 
-		const r = render(<Renderable loader={partLoader} state={state}/>)
+		const r = render(<Renderable loadNext={loadNext} loader={partLoader} state={state}/>)
+
 		act(() => {
 			sendNextPage(requests)
 		})
-		expect(await r.getByTestId("loading")).toHaveTextContent("loading")
+		expect(r.getByTestId("loading")).toHaveTextContent("loading")
 		expect(await r.findByTestId("item_0")).toHaveTextContent("0")
 		expect(await r.findByTestId("item_4")).toHaveTextContent("4")
 		expect(() => r.getByTestId("item_5")).toThrow()
@@ -90,7 +95,6 @@ describe("InfiniteList", () => {
 			fireEvent.click(r.getByTestId("next"))
 			sendNextPage(requests)
 		})
-
 		expect(r.getByTestId("status")).toHaveTextContent("loading")
 		expect(await r.findByTestId("item_5")).toHaveTextContent("5")
 		expect(() => r.getByTestId("item_10")).toThrow()
@@ -101,9 +105,10 @@ describe("InfiniteList", () => {
 		const ERROR_MESSAGE = "error"
 
 		const requests = new QueueingSubject<[number | null, Subject<[number[], number]>]>()
+		const loadNext = new ReplaySubject<() => Promise<void>>()
 		const partLoader = createPartLoader(requests)
 
-		const r = render(<Renderable loader={partLoader} state={state}/>)
+		const r = render(<Renderable loadNext={loadNext} loader={partLoader} state={state}/>)
 		await act(() => sendError(requests, new Error(ERROR_MESSAGE)))
 
 		expect(r.getByTestId("reload")).toBeTruthy()
