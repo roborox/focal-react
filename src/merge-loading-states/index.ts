@@ -20,7 +20,7 @@ export function mergeLoadingStatuses(statuses: LoadingStatus[]): LoadingStatus {
 export function mergeLoadingStates<T1, T2>(
 	state1: Observable<LoadingState<T1>>, state2: Observable<LoadingState<T2>>,
 ): Observable<LoadingState<[T1, T2]>> {
-	return combineLatest(state1, state2).pipe(map((statuses) => ({
+	return combineLatest([state1, state2]).pipe(map((statuses) => ({
 		status: mergeLoadingStatuses(statuses.map(({ status }) => status)),
 		value: statuses.map(({ value }) => value) as [T1, T2],
 	})))

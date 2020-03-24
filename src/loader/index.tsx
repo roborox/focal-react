@@ -1,8 +1,9 @@
-import React, { useMemo, useEffect } from "react"
+import React, { useMemo } from "react"
 import { Observable } from "rxjs"
 import { useRx } from "../use-rx"
 import { LoadingStatus } from "../loading-state"
 import { caseWhen } from "../case-when"
+import { useSubscription } from "../use-subscription"
 
 export interface LoaderProps {
 	status: Observable<LoadingStatus>
@@ -21,16 +22,11 @@ export function Loader({ children, status, onError, error, idle, loading }: Load
 		error,
 	}), [status, children, error, idle, loading])
 
-	useEffect(() => {
-		if (onError) {
-			const s = status.subscribe((next) => {
-				if (next.status === "error") {
-					onError(next.error)
-				}
-			})
-			return () => s.unsubscribe()
+	useSubscription(status, next => {
+		if (onError && next.status === "error") {
+			onError(next.error)
 		}
-	}, [onError, status])
+	}, [onError])
 
 	return <>{useRx(rx)}</>
 }

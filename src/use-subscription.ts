@@ -1,14 +1,11 @@
-import { Observable, Subscription } from "rxjs"
-import { useEffect, useRef } from "react"
+import { Observable } from "rxjs"
+import { useEffect } from "react"
 
 export function useSubscription<T>(observable: Observable<T>, next: (value: T) => void, deps: any[] = []) {
-	const subscription = useRef<Subscription>()
 	useEffect(() => {
-		subscription.current = observable.subscribe(next)
+		const s = observable.subscribe(next)
 		return () => {
-			if (subscription.current) {
-				subscription.current.unsubscribe()
-			}
+			s.unsubscribe()
 		}
-	}, [observable, deps])
+	}, [observable, ...deps])
 }

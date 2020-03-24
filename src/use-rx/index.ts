@@ -1,5 +1,6 @@
 import { Observable } from "rxjs"
-import { useEffect, useState } from "react"
+import { useState } from "react"
+import { useSubscription } from "../use-subscription"
 
 export interface HasGet<T> {
 	get(): T
@@ -20,9 +21,6 @@ export function useRx<T>(observable: Observable<T>): T | null
 export function useRx<T>(observable: Observable<T>, initial: T): T
 export function useRx<T>(observable: Observable<T>, initial?: T): T | null {
 	const [state, setState] = useState<T | null>(() => getInitialState(observable, initial))
-	useEffect(() => {
-		const subscription = observable.subscribe(setState)
-		return () => subscription.unsubscribe()
-	}, [observable])
+	useSubscription(observable, setState)
 	return state
 }
