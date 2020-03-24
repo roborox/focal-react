@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/roborox/focal-react/compare/v1.2.0...v1.3.0) (2020-03-24)
+
+
+### Features
+
+* add mergeLoadingStates utility function ([415cdca](https://github.com/roborox/focal-react/commit/415cdcaba63db3c5b74c1da713c55ee5d5a5d8a2))
+
 # [1.2.0](https://github.com/roborox/focal-react/compare/v1.1.1...v1.2.0) (2020-03-24)
 
 
