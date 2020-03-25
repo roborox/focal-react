@@ -2,7 +2,7 @@ import React from "react"
 import { fireEvent, render } from "@testing-library/react"
 import { Atom, reactiveList } from "@grammarly/focal"
 import { act } from "react-dom/test-utils"
-import { Observable, Subject, ReplaySubject } from "rxjs"
+import { Observable, Subject } from "rxjs"
 import { QueueingSubject } from "queueing-subject"
 import { first, map } from "rxjs/operators"
 import { InfiniteList } from "./index"
@@ -11,14 +11,12 @@ import { range } from "../../test/utils/range"
 import { InfiniteListState, listStateIdle } from "./domain"
 import { Rx } from "../rx"
 
-const Renderable = ({ loader, state, loadNext }: {
+const Renderable = ({ loader, state }: {
 	loader: ListPartLoader<number, number>,
-	loadNext: ReplaySubject<() => Promise<void>>,
 	state: Atom<InfiniteListState<number, number>>
 }) => (
 	<InfiniteList
 		state={state}
-		loadNext={loadNext}
 		error={(error, reload) => (
 			<button data-error={(error as Error).message} onClick={reload} data-testid="reload">
 				reload
@@ -77,10 +75,9 @@ describe("InfiniteList", () => {
 	test("should load first page at start and then other pages", async () => {
 		expect.assertions(8)
 		const requests = new QueueingSubject<RequestData>()
-		const loadNext = new ReplaySubject<() => Promise<void>>()
 		const partLoader: ListPartLoader<number, number> = createPartLoader(requests)
 
-		const r = render(<Renderable loadNext={loadNext} loader={partLoader} state={state}/>)
+		const r = render(<Renderable loader={partLoader} state={state}/>)
 
 		act(() => {
 			sendNextPage(requests)
@@ -105,10 +102,9 @@ describe("InfiniteList", () => {
 		const ERROR_MESSAGE = "error"
 
 		const requests = new QueueingSubject<[number | null, Subject<[number[], number]>]>()
-		const loadNext = new ReplaySubject<() => Promise<void>>()
 		const partLoader = createPartLoader(requests)
 
-		const r = render(<Renderable loadNext={loadNext} loader={partLoader} state={state}/>)
+		const r = render(<Renderable loader={partLoader} state={state}/>)
 		await act(() => sendError(requests, new Error(ERROR_MESSAGE)))
 
 		expect(r.getByTestId("reload")).toBeTruthy()
