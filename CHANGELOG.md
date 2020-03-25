@@ -1,3 +1,12 @@
+## [1.3.1](https://github.com/roborox/focal-react/compare/v1.3.0...v1.3.1) (2020-03-25)
+
+
+### Bug Fixes
+
+* fix ts errors ([ecd5009](https://github.com/roborox/focal-react/commit/ecd500961c4aab6c67a2cb715b45e997168ed570))
+* mergeStatuses ([e21b01c](https://github.com/roborox/focal-react/commit/e21b01c5125f2f1b070362b7b850a16c0ebc504a))
+* useInfiniteList, useSubscription fixed, getFirstLoadStatus ([1d37edd](https://github.com/roborox/focal-react/commit/1d37edda3275ef9335b0ed063af7043d984086ba))
+
 # [1.3.0](https://github.com/roborox/focal-react/compare/v1.2.0...v1.3.0) (2020-03-24)
 
 
