@@ -4,26 +4,29 @@ import { save } from "../save"
 
 export type ListPartLoader<D, C> = (continuation: C | null) => Promise<[D[], C]>
 
-export const createLoadNext = <D, C>(loader: ListPartLoader<D, C>, source: Atom<InfiniteListState<D, C>>) => {
+export const createLoadNext = <D, C>(loader: ListPartLoader<D, C>, state: Atom<InfiniteListState<D, C>>) => {
 	return async () => {
-		const finishedLens = source.lens("finished")
+		const finishedLens = state.lens("finished")
 
 		if (!finishedLens.get()) {
-			const promise = loader(source.lens("continuation").get())
+			const promise = loader(state.lens("continuation").get())
+			const initialState = {
+				status: state.lens("status"),
+			}
 
-			await save(promise, { status: source.lens("status") })
+			await save(promise, initialState);
+			(async () => {
+				try {
+					const [items, continuation] = await promise
 
-			promise
-				.then(([nextItems, continuation]) => {
-					if (nextItems.length === 0) {
+					if (items.length === 0) {
 						finishedLens.set(true)
 					}
 
-					source.lens("items").modify((prev) => prev.concat(nextItems))
-					source.lens("continuation").set(continuation)
-				})
-				.catch(() => { /** No-op */ })
-
+					state.lens("items").modify((x) => x.concat(items))
+					state.lens("continuation").set(continuation)
+				} catch (_) { /** no-op */ }
+			})()
 		} else {
 			console.warn("Loadable list already finished")
 		}
