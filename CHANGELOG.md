@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/roborox/focal-react/compare/v1.3.1...v1.3.2) (2020-03-26)
+
+
+### Bug Fixes
+
+* fix createLoadNext, add useFirstLoadState ([322a386](https://github.com/roborox/focal-react/commit/322a386ab55cacd3febed06d58ce106e4885b930))
+
 ## [1.3.1](https://github.com/roborox/focal-react/compare/v1.3.0...v1.3.1) (2020-03-25)
 
 
