@@ -1,3 +1,15 @@
+# [1.4.0](https://github.com/roborox/focal-react/compare/v1.3.2...v1.4.0) (2020-03-27)
+
+
+### Bug Fixes
+
+* useFirstLoadState hook changed to getFirstStatus ([4af198d](https://github.com/roborox/focal-react/commit/4af198d1940923abae2c96454d692f6235363efb))
+
+
+### Features
+
+* createAppStateProvider to create state provider and hook ([acc0325](https://github.com/roborox/focal-react/commit/acc03257fa3cbcc06f54543237d8f7e41c33becd))
+
 ## [1.3.2](https://github.com/roborox/focal-react/compare/v1.3.1...v1.3.2) (2020-03-26)
 
 
