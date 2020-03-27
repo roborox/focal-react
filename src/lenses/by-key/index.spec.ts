@@ -1,5 +1,5 @@
 import { Map } from "immutable"
-import { byKey } from "./"
+import { byKey, byKeyWithDefault } from "./"
 
 describe("byKey Lens", () => {
 	test("should not change Map if item not changed", () => {
@@ -9,5 +9,13 @@ describe("byKey Lens", () => {
 		expect(lens.set(initial, map) === map).toBeTruthy()
 		expect(lens.set(-1, map) !== map).toBeTruthy()
 		expect(lens.set(-1, map).get("key")).toBe(-1)
+	})
+
+	test("should get default item if doesn't exist", () => {
+		const map = Map<string, string>()
+		const defaultValue = "123"
+		const lens = byKeyWithDefault<string, string>("key", defaultValue)
+
+		expect(lens.get(map)).toEqual(defaultValue)
 	})
 })
