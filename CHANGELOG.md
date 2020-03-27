@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/roborox/focal-react/compare/v1.4.0...v1.5.0) (2020-03-27)
+
+
+### Features
+
+* add byKeyWithDefault lens ([#1](https://github.com/roborox/focal-react/issues/1)) ([add8344](https://github.com/roborox/focal-react/commit/add8344962e8859038bfd425c4ec5aad9cde7c10))
+
 # [1.4.0](https://github.com/roborox/focal-react/compare/v1.3.2...v1.4.0) (2020-03-27)
 
 
