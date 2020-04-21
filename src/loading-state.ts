@@ -28,11 +28,11 @@ export const createLoadingStatusError = <T>(error: T): LoadingStatusError => ({
 })
 
 export type LoadingState<T> = {
-	value: T
+	value?: T,
 	status: LoadingStatus
 }
 
-export const createLoadingStateIdle = <T>(emptyValue: T): LoadingState<T> => ({
+export const createLoadingStateIdle = <T>(emptyValue?: T): LoadingState<T> => ({
 	status: loadingStatusIdle,
 	value: emptyValue,
 })

@@ -5,9 +5,8 @@ import { loadingStatusLoading, loadingStatusSuccess, LoadingState, createLoading
 describe("merge-loading-states", () => {
 	it("it should convert [loading, success] => loading", () => {
 		expect.assertions(1)
-		const o1 = new BehaviorSubject<LoadingState<string | null>>({
+		const o1 = new BehaviorSubject<LoadingState<string>>({
 			status: loadingStatusLoading,
-			value: null,
 		})
 		const o2 = new BehaviorSubject<LoadingState<string>>({
 			status: loadingStatusSuccess,
@@ -16,7 +15,7 @@ describe("merge-loading-states", () => {
 
 		mergeLoadingStates(o1, o2).subscribe((val) => {
 			expect(val).toEqual({
-				value: [null, "hello"],
+				value: [undefined, "hello"],
 				status: {
 					status: "loading",
 				},
@@ -29,7 +28,6 @@ describe("merge-loading-states", () => {
 		const ERROR = "err"
 		const o1 = new BehaviorSubject<LoadingState<string | null>>({
 			status: createLoadingStatusError(ERROR),
-			value: null,
 		})
 		const o2 = new BehaviorSubject<LoadingState<string>>({
 			status: loadingStatusSuccess,
@@ -38,7 +36,7 @@ describe("merge-loading-states", () => {
 
 		mergeLoadingStates(o1, o2).subscribe((val) => {
 			expect(val).toEqual({
-				value: [null, "world"],
+				value: [undefined, "world"],
 				status: {
 					status: "error",
 					error: ERROR,

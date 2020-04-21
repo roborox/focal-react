@@ -6,9 +6,8 @@ import { save } from "."
 describe("save", () => {
 	test("should save data to atom", async () => {
 		expect.assertions(1)
-		const state = Atom.create<LoadingState<null | ApiData[]>>({
+		const state = Atom.create<LoadingState<ApiData[]>>({
 			status: loadingStatusIdle,
-			value: null,
 		})
 		await save(api.loadPage(0, 5), state)
 		expect(state.get().value).toBeTruthy()
@@ -16,9 +15,8 @@ describe("save", () => {
 
 	test("should save to separate atoms", async () => {
 		expect.assertions(1)
-		const state = Atom.create<LoadingState<null | ApiData[]>>({
+		const state = Atom.create<LoadingState<ApiData[]>>({
 			status: loadingStatusIdle,
-			value: null,
 		})
 		await save(api.loadPage(0, 5), {
 			value: state.lens("value"),

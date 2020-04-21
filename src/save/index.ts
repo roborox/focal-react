@@ -2,7 +2,7 @@ import { Atom } from "@grammarly/focal"
 import { loadingStatusLoading, loadingStatusSuccess, createLoadingStatusError, LoadingStatus, LoadingState } from "../loading-state"
 
 export interface LoadAtoms<T> {
-	value?: Atom<T | null>
+	value?: Atom<T | undefined>
 	status?: Atom<LoadingStatus>,
 }
 
