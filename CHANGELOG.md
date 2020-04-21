@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/roborox/focal-react/compare/v1.5.0...v1.6.0) (2020-04-21)
+
+
+### Features
+
+* add useLoadingState hook, improve DX ([75a70ec](https://github.com/roborox/focal-react/commit/75a70ecb0fd01f024c336bf0b66a00f0fdbf5403))
+
 # [1.5.0](https://github.com/roborox/focal-react/compare/v1.4.0...v1.5.0) (2020-03-27)
 
 
