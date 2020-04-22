@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/roborox/focal-react/compare/v1.6.0...v1.6.1) (2020-04-22)
+
+
+### Bug Fixes
+
+* fix loading state ([64e3c88](https://github.com/roborox/focal-react/commit/64e3c88bf4b88f9583e5f7c74d05c5301e9e01ba))
+
 # [1.6.0](https://github.com/roborox/focal-react/compare/v1.5.0...v1.6.0) (2020-04-21)
 
 
