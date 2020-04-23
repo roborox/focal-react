@@ -5,7 +5,7 @@ import { Atom } from "@grammarly/focal"
 import { useSubscription } from "./use-subscription"
 
 export function useLoadingState<T>(state: Atom<LoadingState<T>>, load: () => Promise<T>, autoload = true) {
-	const loadAndSave = useCallback(() => save(load(), state), [load])
+	const loadAndSave = useCallback(() => save(load(), state), [load, state])
 
 	useSubscription(state, ({ status }) => {
 		if (autoload && status.status === "idle") {

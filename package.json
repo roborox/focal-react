@@ -17,7 +17,7 @@
     "copy-assets": "npm run copy-json-to-lib",
     "test": "jest",
     "lint": "eslint --ext .js,.ts,.ts,.tsx ./",
-    "lint:fix": "eslint --ext .js,.ts,.ts,.tsx ./ --fix",
+    "lint:fix": "eslint --ext .js,.ts,.ts,.tsx ./ --fix --quiet",
     "ci": "sh ./scripts/ci.sh",
     "release": "sh ./scripts/release.sh"
   },
@@ -30,7 +30,7 @@
     "@semantic-release/release-notes-generator": "9.0.0",
     "@testing-library/react": "^9.4.1",
     "@testing-library/jest-dom": "^5.1.1",
-    "@roborox/eslint-config-default": "2.1.1",
+    "@roborox/eslint-config-default": "2.1.4",
     "@types/jest": "^25.1.2",
     "babel-loader": "8.0.6",
     "cpx": "1.5.0",
