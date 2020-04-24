@@ -1,3 +1,15 @@
+# [1.7.0](https://github.com/roborox/focal-react/compare/v1.6.1...v1.7.0) (2020-04-24)
+
+
+### Bug Fixes
+
+* applied new eslint config, removed unused hook ([5ffc2e1](https://github.com/roborox/focal-react/commit/5ffc2e1683ecf91610c78d84d47fbba916c7babd))
+
+
+### Features
+
+* StateLoader with render props ([d7e9f8e](https://github.com/roborox/focal-react/commit/d7e9f8e0e84270cf411b5dc7bc8126b935527c2d))
+
 ## [1.6.1](https://github.com/roborox/focal-react/compare/v1.6.0...v1.6.1) (2020-04-22)
 
 
