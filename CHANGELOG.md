@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/roborox/focal-react/compare/v1.7.0...v1.7.1) (2020-04-29)
+
+
+### Bug Fixes
+
+* fix Rx component ([810a255](https://github.com/roborox/focal-react/commit/810a255c8957015dab19dbdf539babeba28652ff))
+
 # [1.7.0](https://github.com/roborox/focal-react/compare/v1.6.1...v1.7.0) (2020-04-24)
 
 
