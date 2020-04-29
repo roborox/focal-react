@@ -1,16 +1,15 @@
 import React from "react"
 import { act } from "react-dom/test-utils"
 import { render } from "@testing-library/react"
-import { F } from "@grammarly/focal"
-import { Loader } from "../loader"
-import { toRx } from "../to-rx"
+import { Atom, F } from "@grammarly/focal"
+import { Loader } from "./index"
 import { Rx } from "../rx"
+import { createLoadingStateLoading, createLoadingStateSuccess, LoadingStatus } from "../loading-state"
 
 describe("Loader", () => {
 	test("should display loading if is loading", async () => {
 		expect.assertions(2)
-		const [, status] = toRx(new Promise<number>(() => {
-		}))
+		const status = Atom.create<LoadingStatus>({ status: "loading" })
 		const r = render(
 			<span data-testid="test">
 				<Loader status={status} loading={<span>loading</span>}><span>content</span></Loader>
@@ -22,34 +21,29 @@ describe("Loader", () => {
 
 	test("should display content if loaded", async () => {
 		expect.assertions(2)
-		let resolve: (value: number) => void
-		const promise = new Promise<number>((res) => resolve = res)
-		const [value, status] = toRx(promise)
+		const state$ = Atom.create(createLoadingStateLoading<number>())
 		const r = render(
 			<span data-testid="test">
-				<Loader status={status} loading={<span>loading</span>}>
-					<F.span>{value}</F.span>
+				<Loader status={state$.view("status")} loading={<span>loading</span>}>
+					<F.span>{state$.view("value")}</F.span>
 				</Loader>
 			</span>,
 		)
 		expect(r.getByTestId("test")).toHaveTextContent("loading")
 		const number = Math.random()
-		await act(async () => {
-			resolve(number)
-			await promise
+		act(() => {
+			state$.set(createLoadingStateSuccess(number))
 		})
 		expect(r.getByTestId("test")).toHaveTextContent(number.toString())
 	})
 
 	test("should work with <Rx /> component", async () => {
 		expect.assertions(3)
-		let resolve: (value: number) => void
-		const promise = new Promise<number>((res) => resolve = res)
-		const [value, status] = toRx(promise)
+		const state$ = Atom.create(createLoadingStateLoading<number>())
 		const r = render(
 			<span data-testid="test">
-				<Loader status={status} loading={<span>loading</span>}>
-					<Rx value={value}>
+				<Loader status={state$.view("status")} loading={<span>loading</span>}>
+					<Rx value={state$.view("value")}>
 						{renderable => <span data-testid="content">{renderable}</span>}
 					</Rx>
 				</Loader>
@@ -57,9 +51,8 @@ describe("Loader", () => {
 		)
 		expect(r.getByTestId("test")).toHaveTextContent("loading")
 		const number = Math.random()
-		await act(async () => {
-			resolve(number)
-			await promise
+		act(() => {
+			state$.set(createLoadingStateSuccess(number))
 		})
 		expect(r.getByTestId("content")).toBeTruthy()
 		expect(r.getByTestId("content")).toHaveTextContent(number.toString())
