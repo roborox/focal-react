@@ -1,3 +1,10 @@
+## [1.7.3](https://github.com/roborox/focal-react/compare/v1.7.2...v1.7.3) (2020-04-29)
+
+
+### Bug Fixes
+
+* StateLoader can be without children ([6f66893](https://github.com/roborox/focal-react/commit/6f668933d8273e8d981dadf4f03d483cd9e8ada0))
+
 ## [1.7.2](https://github.com/roborox/focal-react/compare/v1.7.1...v1.7.2) (2020-04-29)
 
 
