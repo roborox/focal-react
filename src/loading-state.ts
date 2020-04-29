@@ -1,3 +1,5 @@
+export type LoadingStatusStatus = "idle" | "success" | "loading" | "error"
+
 export type LoadingStatusIdle = {
 	status: "idle"
 }
