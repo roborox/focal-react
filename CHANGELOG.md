@@ -1,3 +1,11 @@
+## [1.7.2](https://github.com/roborox/focal-react/compare/v1.7.1...v1.7.2) (2020-04-29)
+
+
+### Bug Fixes
+
+* Rx can be without children ([f72690f](https://github.com/roborox/focal-react/commit/f72690f765028aeb06058944149f70acab18e0a2))
+* toRx returns LoadingState ([dd5791b](https://github.com/roborox/focal-react/commit/dd5791b17bb93a81933d551ba71bd4818c2a0300))
+
 ## [1.7.1](https://github.com/roborox/focal-react/compare/v1.7.0...v1.7.1) (2020-04-29)
 
 
