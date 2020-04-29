@@ -9,7 +9,7 @@ export interface StateLoaderProps<T> {
 	idle?: React.ReactNode
 	loading?: React.ReactNode
 	error?: (error: any) => React.ReactNode
-	children: (value: T) => React.ReactNode
+	children?: (value: T) => React.ReactNode
 }
 
 export function StateLoader<T>({value, idle, loading, error, children}: StateLoaderProps<T>) {
@@ -19,7 +19,9 @@ export function StateLoader<T>({value, idle, loading, error, children}: StateLoa
 				case "loading":
 					return loading
 				case "success":
-					return children(x.value)
+					if (children)
+						return children(x.value)
+					return x.value
 				case "error":
 					return error?.(x.status.error)
 				default:
