@@ -19,6 +19,18 @@ describe("Loader", () => {
 		await expect(r.getByTestId("test")).not.toHaveTextContent("content")
 	})
 
+	test("should display loading if is loading and children are not set", async () => {
+		expect.assertions(2)
+		const status = Atom.create<LoadingStatus>({ status: "loading" })
+		const r = render(
+			<span data-testid="test">
+				<Loader status={status} loading={<span>loading</span>}/>
+			</span>,
+		)
+		await expect(r.getByTestId("test")).toHaveTextContent("loading")
+		await expect(r.getByTestId("test")).not.toHaveTextContent("content")
+	})
+
 	test("should display content if loaded", async () => {
 		expect.assertions(2)
 		const state$ = Atom.create(createLoadingStateLoading<number>())
