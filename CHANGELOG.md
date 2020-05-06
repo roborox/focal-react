@@ -1,3 +1,11 @@
+## [1.7.4](https://github.com/roborox/focal-react/compare/v1.7.3...v1.7.4) (2020-05-06)
+
+
+### Bug Fixes
+
+* Loader's children are optional ([14b256d](https://github.com/roborox/focal-react/commit/14b256dd4c94fbb5e0e776b85b307003c857c545))
+* Loader's children are optional ([d23e475](https://github.com/roborox/focal-react/commit/d23e4751f08c4fee0eb5050c27bfe55882490bbb))
+
 ## [1.7.3](https://github.com/roborox/focal-react/compare/v1.7.2...v1.7.3) (2020-04-29)
 
 
