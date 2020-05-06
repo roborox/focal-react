@@ -11,7 +11,7 @@ export interface LoaderProps {
 	loading?: React.ReactNode
 	error?: (error: any) => React.ReactNode
 	onError?: (error: any) => void
-	children: React.ReactNode
+	children?: React.ReactNode
 }
 
 export function Loader({ children, status, onError, error, idle, loading }: LoaderProps): React.ReactElement {
