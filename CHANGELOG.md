@@ -1,3 +1,10 @@
+## [1.7.5](https://github.com/roborox/focal-react/compare/v1.7.4...v1.7.5) (2020-05-09)
+
+
+### Bug Fixes
+
+* simplified useRx, only works with observables which emit values immediately ([e574f54](https://github.com/roborox/focal-react/commit/e574f54b87f6e1d3ed23a4010475a1df957c1714))
+
 ## [1.7.4](https://github.com/roborox/focal-react/compare/v1.7.3...v1.7.4) (2020-05-06)
 
 
