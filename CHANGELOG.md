@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/roborox/focal-react/compare/v1.8.0...v1.8.1) (2020-05-09)
+
+
+### Bug Fixes
+
+* minor useRx fix ([33c5a5c](https://github.com/roborox/focal-react/commit/33c5a5cb66029b92a7ea6dca3ab4b7b09699b488))
+
 # [1.8.0](https://github.com/roborox/focal-react/compare/v1.7.5...v1.8.0) (2020-05-09)
 
 
