@@ -12,16 +12,13 @@ export interface RxIfProps {
 export function RxIf({ test, children, negate, else: not }: RxIfProps): React.ReactElement | null {
 	const bool = useRx(test)
 
-	if (bool !== null) {
-		if (negate && !bool) {
-			return <>{children}</>
-		} else if (negate) {
-			return <>{not?.() || null}</>
-		} else if (bool) {
-			return <>{children}</>
-		} else {
-			return <>{not?.() || null}</>
-		}
+	if (negate && !bool) {
+		return <>{children}</>
+	} else if (negate) {
+		return <>{not?.() || null}</>
+	} else if (bool) {
+		return <>{children}</>
+	} else {
+		return <>{not?.() || null}</>
 	}
-	return null
 }

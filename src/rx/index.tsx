@@ -7,14 +7,10 @@ export interface RxProps<T> {
 	children?: (t: T) => React.ReactNode
 }
 
-export function Rx<T>({ value, children }: RxProps<T>): React.ReactElement | null {
+export function Rx<T>({ value, children }: RxProps<T>): React.ReactElement {
 	const simple = useRx(value)
-
-	if (simple !== null && children) {
+	if (children) {
 		return <>{children(simple)}</>
 	}
-	if (simple !== null) {
-		return <>{simple}</>
-	}
-	return null
+	return <>{simple}</>
 }

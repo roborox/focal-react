@@ -16,14 +16,10 @@ export function lift<Props extends Record<string, any>, K extends keyof Props>(
 	const originalName = Component.displayName || Component.name || "Unknown"
 	function LiftedComponent(props: Props) {
 		const value = useRx(props[key] as Observable<Props[K]>)
-		if (value !== null) {
-			const resultProps = { ...props }
-			resultProps[key] = value
+		const resultProps = { ...props }
+		resultProps[key] = value
 
-			return <Component {...resultProps as Props} />
-		} else {
-			return null
-		}
+		return <Component {...resultProps as Props} />
 	}
 
 	LiftedComponent.displayName = `lifted(${originalName})`
