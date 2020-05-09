@@ -30,14 +30,14 @@ describe("useRx", () => {
 		expect(renders.get()).toStrictEqual(1)
 	})
 
-	test("should render ReplaySubject 2 times (1st empty and then real)", () => {
+	test("should render ReplaySubject 1 time", () => {
 		const renders = Atom.create(0)
 		const subject = new ReplaySubject<string>(1)
 		const text = Math.random().toString()
 		subject.next(text)
 		const r = render(<RxText value={subject} renders={renders}/>)
 		expect(r.getByTestId("value")).toHaveTextContent(text)
-		expect(renders.get()).toStrictEqual(2)
+		expect(renders.get()).toStrictEqual(1)
 	})
 
 	test("should listen to Atom changes", () => {
@@ -56,9 +56,9 @@ describe("useRx", () => {
 		const subject = new ReplaySubject<number>(1)
 		subject.next(1)
 		render(<TestCount value={subject}/>)
-		expect(count).toBe(2)
+		expect(count).toBe(1)
 		act(() => subject.next(1))
-		expect(count).toBe(2)
+		expect(count).toBe(1)
 	})
 
 })

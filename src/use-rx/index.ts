@@ -2,25 +2,22 @@ import { Observable } from "rxjs"
 import { useState } from "react"
 import { useSubscription } from "../use-subscription"
 
-export interface HasGet<T> {
-	get(): T
-}
-
-export function getInitialState<T>(observable: Observable<T>, initial?: T): T | null {
+export function getInitialState<T>(observable: Observable<T>): T {
 	let initialState: T | null = null
-	if ((observable as any)["get"] !== undefined) {
-		initialState = (observable as any).get()
-	} else if (initial !== undefined) {
-		initialState = initial
+	let initialized: boolean = false
+	observable.subscribe(next => {
+		initialState = next
+		initialized = true
+	})
+	if (!initialized) {
+		throw new Error("Observable doesn't immediately emits value")
 	}
+	// @ts-ignore
 	return initialState
 }
 
-export function useRx<T>(hasGet: Observable<T> & HasGet<T>): T
-export function useRx<T>(observable: Observable<T>): T | null
-export function useRx<T>(observable: Observable<T>, initial: T): T
-export function useRx<T>(observable: Observable<T>, initial?: T): T | null {
-	const [state, setState] = useState<T | null>(() => getInitialState(observable, initial))
+export function useRx<T>(observable: Observable<T>): T {
+	const [state, setState] = useState<T>(() => getInitialState(observable))
 	useSubscription(observable, setState)
 	return state
 }
