@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/roborox/focal-react/compare/v1.7.5...v1.8.0) (2020-05-09)
+
+
+### Features
+
+* simplified components (because of useRx) ([3088ea9](https://github.com/roborox/focal-react/commit/3088ea9e126b38a2e0a9209856c8b6ad4693d013))
+
 ## [1.7.5](https://github.com/roborox/focal-react/compare/v1.7.4...v1.7.5) (2020-05-09)
 
 
