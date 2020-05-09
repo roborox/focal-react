@@ -1,11 +1,12 @@
 import { Observable } from "rxjs"
 import { useState } from "react"
 import { useSubscription } from "../use-subscription"
+import { first } from "rxjs/operators"
 
 export function getInitialState<T>(observable: Observable<T>): T {
 	let initialState: T | null = null
 	let initialized: boolean = false
-	observable.subscribe(next => {
+	observable.pipe(first()).subscribe(next => {
 		initialState = next
 		initialized = true
 	})
