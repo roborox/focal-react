@@ -1,3 +1,10 @@
+## [1.8.3](https://github.com/roborox/focal-react/compare/v1.8.2...v1.8.3) (2020-05-11)
+
+
+### Bug Fixes
+
+* initial cache implementation ([9c880e0](https://github.com/roborox/focal-react/commit/9c880e075e02dc7765c66f4b35bcbaf42ced6ed2))
+
 ## [1.8.2](https://github.com/roborox/focal-react/compare/v1.8.1...v1.8.2) (2020-05-11)
 
 
