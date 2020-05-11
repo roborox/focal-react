@@ -1,3 +1,11 @@
+## [1.8.2](https://github.com/roborox/focal-react/compare/v1.8.1...v1.8.2) (2020-05-11)
+
+
+### Bug Fixes
+
+* get function to get current or future value of LoadingState ([d991ee7](https://github.com/roborox/focal-react/commit/d991ee75823b20da1d22a8f4561d23bd4a69f0f8))
+* show children in InfiniteList when loading is not defined ([f8b1535](https://github.com/roborox/focal-react/commit/f8b1535bdda55223135db1e845f653a2b4f4df4d))
+
 ## [1.8.1](https://github.com/roborox/focal-react/compare/v1.8.0...v1.8.1) (2020-05-09)
 
 
