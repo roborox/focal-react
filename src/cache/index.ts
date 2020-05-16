@@ -34,9 +34,9 @@ export class Cache<K, V> {
 		this.mapLoader = mapLoader || new DefaultListDataLoader(loader)
 	}
 
-	async get(key: K) {
+	async get(key: K, force: boolean = false) {
 		const state$ = this.map.lens(byKeyWithDefault(key, createLoadingStateIdle<V>()))
-		if (state$.get().status.status === "idle") {
+		if (force || state$.get().status.status === "idle") {
 			save(this.loader.load(key), state$).then()
 		}
 		return get(state$)
