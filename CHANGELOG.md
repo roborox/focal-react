@@ -1,3 +1,10 @@
+## [1.8.4](https://github.com/roborox/focal-react/compare/v1.8.3...v1.8.4) (2020-05-16)
+
+
+### Bug Fixes
+
+* getImmediate, useWithDefault, mapLoadingState ([be4b92f](https://github.com/roborox/focal-react/commit/be4b92f54add314e43fca084d4289415707e967d))
+
 ## [1.8.3](https://github.com/roborox/focal-react/compare/v1.8.2...v1.8.3) (2020-05-11)
 
 
