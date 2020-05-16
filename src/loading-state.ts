@@ -50,3 +50,13 @@ export const createLoadingStateLoading = <T>(emptyValue?: T): LoadingState<T> =>
 	status: loadingStatusLoading,
 	value: emptyValue as T,
 })
+
+export function mapLoadingState<F, T>(mapper: (value: F) => T): (state: LoadingState<F>) => LoadingState<T> {
+	return (state) => {
+		let value: T | undefined
+		if (state.value) {
+			value = mapper(state.value)
+		}
+		return { ...state, value: value as T }
+	}
+}
