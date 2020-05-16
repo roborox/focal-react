@@ -1,6 +1,6 @@
 {
   "name": "@roborox/focal-react",
-  "version": "1.8.4",
+  "version": "1.8.5",
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",
   "files": [

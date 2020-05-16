@@ -1,3 +1,10 @@
+## [1.8.5](https://github.com/roborox/focal-react/compare/v1.8.4...v1.8.5) (2020-05-16)
+
+
+### Bug Fixes
+
+* Cache supports force in get ([c94eabe](https://github.com/roborox/focal-react/commit/c94eabeb79498cce309bbf754007dee1eed5f239))
+
 ## [1.8.4](https://github.com/roborox/focal-react/compare/v1.8.3...v1.8.4) (2020-05-16)
 
 
