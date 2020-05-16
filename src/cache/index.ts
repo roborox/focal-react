@@ -1,5 +1,5 @@
 import { Atom } from "@grammarly/focal"
-import { LoadingState, createLoadingStateIdle, createLoadingStateLoading, createLoadingStateSuccess } from ".."
+import { createLoadingStateIdle, createLoadingStateLoading, createLoadingStateSuccess, LoadingState } from ".."
 import { byKeyWithDefault } from "../lenses/by-key"
 import { save } from "../save"
 import { Map } from "immutable"
@@ -34,12 +34,16 @@ export class Cache<K, V> {
 		this.mapLoader = mapLoader || new DefaultListDataLoader(loader)
 	}
 
-	async get(key: K, force: boolean = false) {
+	getAtom(key: K, force: boolean = false) {
 		const state$ = this.map.lens(byKeyWithDefault(key, createLoadingStateIdle<V>()))
 		if (force || state$.get().status.status === "idle") {
 			save(this.loader.load(key), state$).then()
 		}
-		return get(state$)
+		return state$
+	}
+
+	async get(key: K, force: boolean = false) {
+		return get(this.getAtom(key, force))
 	}
 
 	async getMap(ids: K[]) {
