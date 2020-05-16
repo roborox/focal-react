@@ -1,3 +1,10 @@
+## [1.8.6](https://github.com/roborox/focal-react/compare/v1.8.5...v1.8.6) (2020-05-16)
+
+
+### Bug Fixes
+
+* Cache getAtom ([43c4788](https://github.com/roborox/focal-react/commit/43c47880854d2e141cb9b73c9a8461c706b216dc))
+
 ## [1.8.5](https://github.com/roborox/focal-react/compare/v1.8.4...v1.8.5) (2020-05-16)
 
 
