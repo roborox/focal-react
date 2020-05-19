@@ -46,6 +46,10 @@ export class Cache<K, V> {
 		return get(this.getAtom(key, force))
 	}
 
+	set(key: K, value: V) {
+		this.map.modify(map => map.set(key, createLoadingStateSuccess(value)))
+	}
+
 	async getMap(ids: K[]) {
 		const current = this.map.get()
 		current.entries()
