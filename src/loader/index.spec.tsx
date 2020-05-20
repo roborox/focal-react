@@ -39,6 +39,14 @@ describe("StateLoader", () => {
 		)
 	})
 
+	test("should display content if children empty", async () => {
+		testSuccess(state$ =>
+			<span data-testid="test">
+				<Loader state$={state$} loading={<span>loading</span>}/>
+			</span>,
+		)
+	})
+
 	test("should work if render prop is not used", () => {
 		testSuccess(state$ =>
 			<span data-testid="test">
