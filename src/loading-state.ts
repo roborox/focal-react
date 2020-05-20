@@ -1,3 +1,6 @@
+import { Observable } from "rxjs"
+import { filter, first } from "rxjs/operators"
+
 export type LoadingStatusStatus = "idle" | "success" | "loading" | "error"
 
 export type LoadingStatusIdle = {
@@ -58,5 +61,20 @@ export function mapLoadingState<F, T>(mapper: (value: F) => T): (state: LoadingS
 			value = mapper(state.value)
 		}
 		return { ...state, value: value as T }
+	}
+}
+
+export async function getFinalValue<T>(state$: Observable<LoadingState<T>>) {
+	const result = await state$.pipe(
+		filter(x => x.status.status === "error" || x.status.status === "success"),
+		first(),
+	).toPromise()
+	switch (result.status.status) {
+		case "error":
+			return Promise.reject(result.status.error)
+		case "success":
+			return Promise.resolve(result.value)
+		default:
+			throw new Error("Never happens")
 	}
 }

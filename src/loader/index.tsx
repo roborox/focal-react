@@ -1,32 +1,38 @@
-import React, { useMemo } from "react"
 import { Observable } from "rxjs"
+import { LoadingState } from "../loading-state"
+import React, { ReactChild, useMemo } from "react"
+import { map } from "rxjs/operators"
 import { useRx } from "../use-rx"
-import { LoadingStatus } from "../loading-state"
-import { caseWhen } from "../case-when"
-import { useSubscription } from "../use-subscription"
 
-export interface LoaderProps {
-	status: Observable<LoadingStatus>
+export interface LoaderProps<T> {
+	state$: Observable<LoadingState<T>>
 	idle?: React.ReactNode
 	loading?: React.ReactNode
 	error?: (error: any) => React.ReactNode
-	onError?: (error: any) => void
-	children?: React.ReactNode
+	children?: React.ReactChild | React.ReactChild[] | ((value: T) => React.ReactNode)
 }
 
-export function Loader({ children, status, onError, error, idle, loading }: LoaderProps): React.ReactElement {
-	const rx = useMemo(() => caseWhen(status, {
-		success: children,
-		idle,
-		loading,
-		error,
-	}), [status, children, error, idle, loading])
-
-	useSubscription(status, next => {
-		if (onError && next.status === "error") {
-			onError(next.error)
-		}
-	}, [onError])
-
+export function Loader<T>({state$, idle, loading, error, children}: LoaderProps<T>) {
+	const rx = useMemo(() => {
+		return state$.pipe(map(x => {
+			switch (x.status.status) {
+				case "loading":
+					return loading
+				case "success":
+					if (children) {
+						if (typeof children === "function") {
+							return children(x.value)
+						} else {
+							return children
+						}
+					}
+					return x.value
+				case "error":
+					return error?.(x.status.error)
+				default:
+					return idle
+			}
+		}))
+	}, [children, error, idle, loading, state$])
 	return <>{useRx(rx)}</>
 }

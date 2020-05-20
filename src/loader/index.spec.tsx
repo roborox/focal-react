@@ -1,30 +1,28 @@
-import React from "react"
-import { act } from "react-dom/test-utils"
-import { render } from "@testing-library/react"
-import { Atom, F } from "@grammarly/focal"
+import React, { ReactElement } from "react"
+import { act, render } from "@testing-library/react"
+import { Atom } from "@grammarly/focal"
+import { createLoadingStateLoading, createLoadingStateSuccess, LoadingState } from "../loading-state"
 import { Loader } from "./index"
 import { Rx } from "../rx"
-import { createLoadingStateLoading, createLoadingStateSuccess, LoadingStatus } from "../loading-state"
 
-describe("Loader", () => {
+function testSuccess(comp: (state: Atom<LoadingState<number>>) => ReactElement) {
+	const state$ = Atom.create(createLoadingStateLoading<number>())
+	const r = render(comp(state$))
+	expect(r.getByTestId("test")).toHaveTextContent("loading")
+	const number = Math.random()
+	act(() => {
+		state$.set(createLoadingStateSuccess(number))
+	})
+	expect(r.getByTestId("test")).toHaveTextContent(number.toString())
+}
+
+describe("StateLoader", () => {
 	test("should display loading if is loading", async () => {
 		expect.assertions(2)
-		const status = Atom.create<LoadingStatus>({ status: "loading" })
+		const state$ = Atom.create(createLoadingStateLoading<string>())
 		const r = render(
 			<span data-testid="test">
-				<Loader status={status} loading={<span>loading</span>}><span>content</span></Loader>
-			</span>,
-		)
-		await expect(r.getByTestId("test")).toHaveTextContent("loading")
-		await expect(r.getByTestId("test")).not.toHaveTextContent("content")
-	})
-
-	test("should display loading if is loading and children are not set", async () => {
-		expect.assertions(2)
-		const status = Atom.create<LoadingStatus>({ status: "loading" })
-		const r = render(
-			<span data-testid="test">
-				<Loader status={status} loading={<span>loading</span>}/>
+				<Loader state$={state$} loading={<span>loading</span>}>{v => <span>{v}</span>}</Loader>
 			</span>,
 		)
 		await expect(r.getByTestId("test")).toHaveTextContent("loading")
@@ -32,41 +30,24 @@ describe("Loader", () => {
 	})
 
 	test("should display content if loaded", async () => {
-		expect.assertions(2)
-		const state$ = Atom.create(createLoadingStateLoading<number>())
-		const r = render(
+		testSuccess(state$ =>
 			<span data-testid="test">
-				<Loader status={state$.view("status")} loading={<span>loading</span>}>
-					<F.span>{state$.view("value")}</F.span>
+				<Loader state$={state$} loading={<span>loading</span>}>
+					{value => <span>{value}</span>}
 				</Loader>
 			</span>,
 		)
-		expect(r.getByTestId("test")).toHaveTextContent("loading")
-		const number = Math.random()
-		act(() => {
-			state$.set(createLoadingStateSuccess(number))
-		})
-		expect(r.getByTestId("test")).toHaveTextContent(number.toString())
 	})
 
-	test("should work with <Rx /> component", async () => {
-		expect.assertions(3)
-		const state$ = Atom.create(createLoadingStateLoading<number>())
-		const r = render(
+	test("should work if render prop is not used", () => {
+		testSuccess(state$ =>
 			<span data-testid="test">
-				<Loader status={state$.view("status")} loading={<span>loading</span>}>
-					<Rx value={state$.view("value")}>
-						{renderable => <span data-testid="content">{renderable}</span>}
-					</Rx>
+				<Loader state$={state$} loading={<span>loading</span>}>
+					simple text
+					<div>multiple elements</div>
+					<Rx value={state$.lens("value")}>{value => <span>{value}</span>}</Rx>
 				</Loader>
 			</span>,
 		)
-		expect(r.getByTestId("test")).toHaveTextContent("loading")
-		const number = Math.random()
-		act(() => {
-			state$.set(createLoadingStateSuccess(number))
-		})
-		expect(r.getByTestId("content")).toBeTruthy()
-		expect(r.getByTestId("content")).toHaveTextContent(number.toString())
 	})
 })

@@ -1,9 +1,14 @@
 import { Atom } from "@grammarly/focal"
-import { createLoadingStateIdle, createLoadingStateLoading, createLoadingStateSuccess, LoadingState } from ".."
+import {
+	createLoadingStateIdle,
+	createLoadingStateLoading,
+	createLoadingStateSuccess,
+	getFinalValue,
+	LoadingState,
+} from ".."
 import { byKeyWithDefault } from "../lenses/by-key"
 import { save } from "../save"
 import { Map } from "immutable"
-import { get } from "../get"
 
 export interface DataLoader<K, V> {
 	load(key: K): Promise<V>
@@ -29,9 +34,9 @@ export class Cache<K, V> {
 	constructor(
 		private readonly map: Atom<Map<K, LoadingState<V>>>,
 		private readonly loader: DataLoader<K, V>,
-		mapLoader?: ListDataLoader<K, V>,
+		listLoader?: ListDataLoader<K, V>,
 	) {
-		this.mapLoader = mapLoader || new DefaultListDataLoader(loader)
+		this.mapLoader = listLoader || new DefaultListDataLoader(loader)
 	}
 
 	getAtom(key: K, force: boolean = false) {
@@ -43,7 +48,7 @@ export class Cache<K, V> {
 	}
 
 	async get(key: K, force: boolean = false) {
-		return get(this.getAtom(key, force))
+		return getFinalValue(this.getAtom(key, force))
 	}
 
 	set(key: K, value: V) {
