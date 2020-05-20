@@ -2,10 +2,10 @@ import { Cache } from "../cache"
 import React from "react"
 import { Loader, LoaderProps } from "../loader"
 
-export interface CacheableProps<K, V> extends Omit<LoaderProps<V>, "value"> {
+export interface CacheableProps<K, V> extends Omit<LoaderProps<V>, "state$"> {
 	cache: Cache<K, V>
 	id: K
-	children: (t: V) => React.ReactNode
+	children: React.ReactChild | React.ReactChild[] | ((t: V) => React.ReactNode)
 }
 
 export function Cacheable<K, V>(
