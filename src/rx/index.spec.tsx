@@ -12,7 +12,7 @@ describe("Rx", () => {
 	test("should observe reactive value", () => {
 		const text = Math.random().toString()
 		const atom = Atom.create(text)
-		const r = render(<Rx value={atom}>{x => <Text value={x}/>}</Rx>)
+		const r = render(<Rx value$={atom}>{x => <Text value={x}/>}</Rx>)
 		expect(r.getByTestId("value")).toHaveTextContent(text)
 		const nextText = Math.random().toString()
 		act(() => atom.set(nextText))

@@ -16,7 +16,9 @@
     "copy-json-to-lib": "cpx \"./src/**/*.json\" ./build",
     "copy-assets": "npm run copy-json-to-lib",
     "test": "jest",
-    "lint": "eslint --ext .js,.ts,.ts,.tsx ./",
+    "lint:js": "eslint --ext .js,.jsx,.ts,.tsx ./",
+    "lint:types": "tsc --noEmit",
+    "lint": "npm run lint:js && npm run lint:types",
     "lint:fix": "eslint --ext .js,.ts,.ts,.tsx ./ --fix --quiet",
     "ci": "sh ./scripts/ci.sh",
     "release": "sh ./scripts/release.sh"

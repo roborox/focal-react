@@ -53,7 +53,7 @@ describe("StateLoader", () => {
 				<Loader state$={state$} loading={<span>loading</span>}>
 					simple text
 					<div>multiple elements</div>
-					<Rx value={state$.lens("value")}>{value => <span>{value}</span>}</Rx>
+					<Rx value$={state$.lens("value")}>{value => <span>{value}</span>}</Rx>
 				</Loader>
 			</span>,
 		)

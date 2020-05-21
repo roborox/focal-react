@@ -41,7 +41,7 @@ export class Cache<K, V> {
 
 	getAtom(key: K, force: boolean = false) {
 		const state$ = this.map.lens(byKeyWithDefault(key, createLoadingStateIdle<V>()))
-		if (force || state$.get().status.status === "idle") {
+		if (force || state$.get().status === "idle") {
 			save(this.loader.load(key), state$).then()
 		}
 		return state$
@@ -60,7 +60,7 @@ export class Cache<K, V> {
 		current.entries()
 		const notLoaded = ids.filter(x => {
 			const state = current.get(x)
-			return !state || state.status.status === "idle"
+			return !state || state.status === "idle"
 		})
 		//todo do not use reduce. change Map at once
 		//todo error handling. should we mark items as errors?

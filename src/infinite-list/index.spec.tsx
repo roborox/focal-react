@@ -16,7 +16,7 @@ const Renderable = ({ loader, state }: {
 	state: Atom<InfiniteListState<number, number>>
 }) => (
 	<InfiniteList
-		state={state}
+		state$={state}
 		error={(error, reload) => (
 			<button data-error={(error as Error).message} onClick={reload} data-testid="reload">
 				reload
@@ -27,13 +27,13 @@ const Renderable = ({ loader, state }: {
 	>
 		{(load) =>
 			<section>
-				<Rx value={reactiveList(state.view("items"), x =>
+				<Rx value$={reactiveList(state.view("items"), x =>
 					<span key={x} data-testid={`item_${x}`}>{x}</span>,
 				)}>
 					{(renderable) => <div>{renderable}</div>}
 				</Rx>
 				<button data-testid="next" onClick={load}>next</button>
-				<Rx value={state.pipe(map(({ status }) => status))}>
+				<Rx value$={state.pipe(map(({ status }) => status))}>
 					{t => <span data-testid="status">{t.status}</span>}
 				</Rx>
 			</section>

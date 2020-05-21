@@ -8,7 +8,7 @@ export function useLoadingState<T>(state: Atom<LoadingState<T>>, load: () => Pro
 	const loadAndSave = useCallback(() => save(load(), state), [load, state])
 
 	useSubscription(state, ({ status }) => {
-		if (autoload && status.status === "idle") {
+		if (autoload && status === "idle") {
 			loadAndSave().then()
 		}
 	}, [autoload, loadAndSave])

@@ -32,26 +32,23 @@ export const createLoadingStatusError = <T>(error: T): LoadingStatusError => ({
 	error,
 })
 
-export type LoadingState<T> = {
-	value: T,
-	status: LoadingStatus
-}
+export type LoadingState<T> = { value: T } & LoadingStatus
 
 export const createLoadingStateIdle = <T>(emptyValue?: T): LoadingState<T> => ({
-	status: loadingStatusIdle,
 	value: emptyValue as T,
+	...loadingStatusIdle,
 })
 export const createLoadingStateSuccess = <T>(value: T): LoadingState<T> => ({
-	status: loadingStatusSuccess,
 	value,
+	...loadingStatusSuccess,
 })
 export const createLoadingStateError = <T>(error: any, emptyValue?: T): LoadingState<T> => ({
-	status: createLoadingStatusError(error),
 	value: emptyValue as T,
+	...createLoadingStatusError(error),
 })
 export const createLoadingStateLoading = <T>(emptyValue?: T): LoadingState<T> => ({
-	status: loadingStatusLoading,
 	value: emptyValue as T,
+	...loadingStatusLoading,
 })
 
 export function mapLoadingState<F, T>(mapper: (value: F) => T): (state: LoadingState<F>) => LoadingState<T> {
@@ -66,12 +63,12 @@ export function mapLoadingState<F, T>(mapper: (value: F) => T): (state: LoadingS
 
 export async function getFinalValue<T>(state$: Observable<LoadingState<T>>) {
 	const result = await state$.pipe(
-		filter(x => x.status.status === "error" || x.status.status === "success"),
+		filter(x => x.status === "error" || x.status === "success"),
 		first(),
 	).toPromise()
-	switch (result.status.status) {
+	switch (result.status) {
 		case "error":
-			return Promise.reject(result.status.error)
+			return Promise.reject(result.error)
 		case "success":
 			return Promise.resolve(result.value)
 		default:
