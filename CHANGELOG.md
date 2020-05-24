@@ -1,3 +1,25 @@
+# [2.0.0](https://github.com/roborox/focal-react/compare/v1.8.6...v2.0.0) (2020-05-24)
+
+
+### Bug Fixes
+
+* Cache.set ([fef8543](https://github.com/roborox/focal-react/commit/fef8543b97ba04990972aaacba2deafc00ba7198))
+* test for Loader ([ba4d767](https://github.com/roborox/focal-react/commit/ba4d7676ea3a2239d1131310e987bf24ebdaaaf9))
+
+
+### Features
+
+* improved Cacheable ([c0d5b7b](https://github.com/roborox/focal-react/commit/c0d5b7b21ae52b84326879e0a93f1cfceadaea38))
+* removed app-state, renamed get to getFinalValue, cacheable, Loadable changed, case-when removed ([cd49fbb](https://github.com/roborox/focal-react/commit/cd49fbb35deba80d9c159a3b4651f3083b402736))
+* renamed all rx values, LoadingState simplified ([e8add09](https://github.com/roborox/focal-react/commit/e8add0903393d49cd18c532864a086f40d5fed55))
+* reverted and fixed save function ([7c53230](https://github.com/roborox/focal-react/commit/7c532307974c1601880a2a1eb3896ddf0b2a5afe))
+* RxIf improved ([b877e31](https://github.com/roborox/focal-react/commit/b877e31162086f06dd62f957d8c9f85c1fcac4ec))
+
+
+### BREAKING CHANGES
+
+* primitives changed
+
 ## [1.8.6](https://github.com/roborox/focal-react/compare/v1.8.5...v1.8.6) (2020-05-16)
 
 
