@@ -4,7 +4,7 @@ import { useRx } from "../use-rx"
 
 export interface RxIfProps {
 	test$: Observable<boolean>,
-	else?: () => React.ReactNode,
+	else?: React.ReactChild | React.ReactChild[] | (() => React.ReactNode),
 	negate?: boolean
 	children: React.ReactNode
 }
@@ -15,10 +15,16 @@ export function RxIf({ test$, children, negate, else: not }: RxIfProps): React.R
 	if (negate && !bool) {
 		return <>{children}</>
 	} else if (negate) {
-		return <>{not?.() || null}</>
+		if (typeof not === "function")
+			return <>{not()}</>
+		else
+			return <>{not}</>
 	} else if (bool) {
 		return <>{children}</>
 	} else {
-		return <>{not?.() || null}</>
+		if (typeof not === "function")
+			return <>{not()}</>
+		else
+			return <>{not}</>
 	}
 }
