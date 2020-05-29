@@ -1,6 +1,6 @@
 import { Lens } from "@grammarly/focal"
 
-function byIndex<T>(i: number): Lens<T[], T> {
+export function byIndex<T>(i: number): Lens<T[], T> {
 	return Lens.create(
 		xs => xs[i],
 		(x, xs) => {
