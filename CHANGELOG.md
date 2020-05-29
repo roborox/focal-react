@@ -1,3 +1,11 @@
+## [2.0.1](https://github.com/roborox/focal-react/compare/v2.0.0...v2.0.1) (2020-05-29)
+
+
+### Bug Fixes
+
+* fix infinite list ([3d56712](https://github.com/roborox/focal-react/commit/3d5671294ea754d2bd29a1eb843a6c565b334607))
+* make byIndex exported by module ([2800842](https://github.com/roborox/focal-react/commit/28008425dbfc30b92f16883a3d5206ac6bbf691d))
+
 # [2.0.0](https://github.com/roborox/focal-react/compare/v1.8.6...v2.0.0) (2020-05-24)
 
 
