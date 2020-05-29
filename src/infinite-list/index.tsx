@@ -1,12 +1,12 @@
 import React from "react"
+import { Observable } from "rxjs"
+import { map } from "rxjs/operators"
 import { Atom } from "@grammarly/focal"
 import { ListPartLoader } from "./create-load-next"
 import { InfiniteListState } from "./domain"
 import { useInfiniteList } from "./use-infinite-list"
 import { Loader, LoaderProps } from "../loader"
-import { Observable } from "rxjs"
 import { LoadingState, loadingStatusSuccess } from "../loading-state"
-import { map } from "rxjs/operators"
 
 export interface InfiniteListProps<T, C> extends Omit<ListLoaderProps<T, C>, "error" | "children"> {
 	state$: Atom<InfiniteListState<T, C>>

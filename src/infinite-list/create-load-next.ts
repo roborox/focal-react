@@ -1,19 +1,17 @@
 import { Atom } from "@grammarly/focal"
-import { InfiniteListState } from "./domain"
+import { InfiniteListState, listStateIdle } from "./domain"
 import { createLoadingStatusError, loadingStatusLoading, loadingStatusSuccess } from "../loading-state"
 
 export type ListPartLoader<D, C> = (continuation: C | null) => Promise<[D[], C]>
 
 export const createLoadNext = <D, C>(loader: ListPartLoader<D, C>, state$: Atom<InfiniteListState<D, C>>) => {
-	return async () => {
-		const finished$ = state$.lens("finished")
-		const status$ = state$.lens("status")
-		const items$ = state$.lens("items")
-		const cont$ = state$.lens("continuation")
+	const finished$ = state$.lens("finished")
+	const status$ = state$.lens("status")
+	const items$ = state$.lens("items")
+	const cont$ = state$.lens("continuation")
 
-		if (status$.view("status").get() === "loading") {
-			console.warn("List is updating")
-		} else if (!finished$.get()) {
+	return async (reload?: boolean) => {
+		async function load() {
 			const promise = loader(cont$.get())
 			status$.set(loadingStatusLoading)
 			try {
@@ -27,8 +25,19 @@ export const createLoadNext = <D, C>(loader: ListPartLoader<D, C>, state$: Atom<
 			} catch (e) {
 				status$.set(createLoadingStatusError(e))
 			}
+		}
+
+		if (reload === true) {
+			state$.set(listStateIdle())
+			load()
 		} else {
-			console.warn("Loadable list already finished")
+			if (status$.view("status").get() === "loading") {
+				console.warn("List is updating")
+			} else if (!finished$.get()) {
+				load()
+			} else {
+				console.warn("Loadable list already finished")
+			}
 		}
 	}
 }
