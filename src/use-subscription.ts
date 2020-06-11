@@ -17,5 +17,5 @@ export function useSubscription<T>(
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [observable, ...deps])
+	}, deps)
 }
