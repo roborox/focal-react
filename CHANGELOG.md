@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/roborox/focal-react/compare/v2.0.1...v2.1.0) (2020-06-13)
+
+
+### Features
+
+* Cacheable error add reload ([227130f](https://github.com/roborox/focal-react/commit/227130f0d7ca5a1686d249454a7b39541a5d9cf5))
+
 ## [2.0.1](https://github.com/roborox/focal-react/compare/v2.0.0...v2.0.1) (2020-05-29)
 
 
