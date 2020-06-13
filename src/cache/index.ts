@@ -29,18 +29,22 @@ class DefaultListDataLoader<K, V> implements ListDataLoader<K, V> {
 }
 
 export class Cache<K, V> {
-	private mapLoader: ListDataLoader<K, V>
+	public readonly mapLoader: ListDataLoader<K, V>
 
 	constructor(
 		private readonly map: Atom<Map<K, LoadingState<V>>>,
-		private readonly loader: DataLoader<K, V>,
+		public readonly loader: DataLoader<K, V>,
 		listLoader?: ListDataLoader<K, V>,
 	) {
 		this.mapLoader = listLoader || new DefaultListDataLoader(loader)
 	}
 
+	getStateAtom(key: K) {
+		return this.map.lens(byKeyWithDefault(key, createLoadingStateIdle<V>()))
+	}
+
 	getAtom(key: K, force: boolean = false) {
-		const state$ = this.map.lens(byKeyWithDefault(key, createLoadingStateIdle<V>()))
+		const state$ = this.getStateAtom(key)
 		if (force || state$.get().status === "idle") {
 			save(this.loader.load(key), state$).then()
 		}

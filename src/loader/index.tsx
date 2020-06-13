@@ -29,7 +29,7 @@ export function Loader<T>({state$, idle, loading, error, children}: LoaderProps<
 					return x.value
 				case "error":
 					if (typeof error === "function")
-						return error?.(x.error)
+						return error(x.error)
 					return <>{error}</>
 				default:
 					return idle
