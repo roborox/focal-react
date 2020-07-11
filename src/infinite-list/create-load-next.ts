@@ -2,7 +2,7 @@ import { Atom } from "@grammarly/focal"
 import { InfiniteListState, listStateIdle } from "./domain"
 import { createLoadingStatusError, loadingStatusLoading, loadingStatusSuccess } from "../loading-state"
 
-export type ListPartLoader<D, C> = (continuation: C | null) => Promise<[D[], C]>
+export type ListPartLoader<D, C> = (continuation: C | null) => Promise<[D[], C | null]>
 
 export const createLoadNext = <D, C>(loader: ListPartLoader<D, C>, state$: Atom<InfiniteListState<D, C>>) => {
 	const finished$ = state$.lens("finished")
@@ -16,7 +16,7 @@ export const createLoadNext = <D, C>(loader: ListPartLoader<D, C>, state$: Atom<
 			status$.set(loadingStatusLoading)
 			try {
 				const [items, continuation] = await promise
-				if (items.length === 0) {
+				if (items.length === 0 || continuation === null) {
 					finished$.set(true)
 				}
 				items$.modify((x) => x.concat(items))
