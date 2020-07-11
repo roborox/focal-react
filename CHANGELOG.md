@@ -1,3 +1,10 @@
+## [2.1.1](https://github.com/roborox/focal-react/compare/v2.1.0...v2.1.1) (2020-07-11)
+
+
+### Bug Fixes
+
+* ListPartLoader supports null continuation if list is finished ([bacd586](https://github.com/roborox/focal-react/commit/bacd586baa926401fbf5c08c8e5d7efd6fde5ac7))
+
 # [2.1.0](https://github.com/roborox/focal-react/compare/v2.0.1...v2.1.0) (2020-06-13)
 
 
