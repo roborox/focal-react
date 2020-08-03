@@ -59,6 +59,18 @@ export class Cache<K, V> {
 		this.map.modify(map => map.set(key, createLoadingStateSuccess(value)))
 	}
 
+	modifySuccessful(key: K, updateFn: (value: V) => V) {
+		this.map.modify(map => {
+			const value = map.get(key)
+			if (value !== undefined && value.status === "success") {
+				const newValue = updateFn(value.value)
+				return map.set(key, createLoadingStateSuccess(newValue))
+			} else {
+				return map
+			}
+		})
+	}
+
 	async getMap(ids: K[]) {
 		const current = this.map.get()
 		current.entries()
