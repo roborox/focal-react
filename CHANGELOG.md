@@ -1,3 +1,10 @@
+## [2.1.2](https://github.com/roborox/focal-react/compare/v2.1.1...v2.1.2) (2020-08-04)
+
+
+### Bug Fixes
+
+* modifySuccessful for Cache ([a49e70b](https://github.com/roborox/focal-react/commit/a49e70b687968065ed10904e4d27b347c5ef7dea))
+
 ## [2.1.1](https://github.com/roborox/focal-react/compare/v2.1.0...v2.1.1) (2020-07-11)
 
 
