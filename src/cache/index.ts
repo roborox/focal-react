@@ -1,14 +1,8 @@
 import { Atom } from "@grammarly/focal"
-import {
-	createLoadingStateIdle,
-	createLoadingStateLoading,
-	createLoadingStateSuccess,
-	getFinalValue,
-	LoadingState,
-} from ".."
+import { Map } from "immutable"
+import { createLoadingStateIdle, createLoadingStateLoading, createLoadingStateSuccess, getFinalValue, LoadingState, createLoadingStateError } from "../loading-state"
 import { byKeyWithDefault } from "../lenses/by-key"
 import { save } from "../save"
-import { Map } from "immutable"
 
 export interface DataLoader<K, V> {
 	load(key: K): Promise<V>
@@ -29,7 +23,7 @@ class DefaultListDataLoader<K, V> implements ListDataLoader<K, V> {
 }
 
 export class Cache<K, V> {
-	public readonly mapLoader: ListDataLoader<K, V>
+	readonly mapLoader: ListDataLoader<K, V>
 
 	constructor(
 		private readonly map: Atom<Map<K, LoadingState<V>>>,
@@ -45,13 +39,13 @@ export class Cache<K, V> {
 
 	getAtom(key: K, force: boolean = false) {
 		const state$ = this.getStateAtom(key)
-		if (force || state$.get().status === "idle") {
+		if (force || ["idle", "error"].indexOf(state$.get().status) !== -1) {
 			save(this.loader.load(key), state$).then()
 		}
 		return state$
 	}
 
-	async get(key: K, force: boolean = false) {
+	get(key: K, force: boolean = false) {
 		return getFinalValue(this.getAtom(key, force))
 	}
 
@@ -73,17 +67,30 @@ export class Cache<K, V> {
 
 	async getMap(ids: K[]) {
 		const current = this.map.get()
-		current.entries()
-		const notLoaded = ids.filter(x => {
+		const idsToLoad = ids.filter(x => {
 			const state = current.get(x)
 			return !state || state.status === "idle"
 		})
-		//todo do not use reduce. change Map at once
-		//todo error handling. should we mark items as errors?
-		this.map.modify(map => notLoaded.reduce((map, id) => map.set(id, createLoadingStateLoading()), map))
-		const values = await this.mapLoader.loadList(notLoaded)
-		this.map.modify(map => values.reduce((map, [id, v]) => map.set(id, createLoadingStateSuccess(v)), map))
-		const allValues = await Promise.all(ids.map(id => this.get(id).then(v => [id, v] as [K, V])))
-		return Map(allValues)
+
+		this.map.modify(map => idsToLoad.reduce((m, x) => m.set(x, createLoadingStateLoading()), map))
+		const values = await this.mapLoader.loadList(idsToLoad)
+		this.map.modify(map => idsToLoad.reduce((m, id) => {
+			const loaded = values.find(x => x[0] === id)
+			if (loaded) {
+				return m.set(id, createLoadingStateSuccess(loaded[1]))
+			} else {
+				return m.set(id, createLoadingStateError(new Error("Can't load")))
+			}
+		}, map))
+
+		const mapped = await Promise.all(ids.map(id => {
+			return this.get(id)
+				.then(x => [id, x] as [K, V])
+				.catch(error => {
+					this.map.modify(map => map.set(id, createLoadingStateError(error)))
+					return null
+				})
+		}))
+		return Map(mapped.filter(x => x !== null) as [K, V][])
 	}
 }
