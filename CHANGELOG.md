@@ -1,3 +1,10 @@
+## [2.1.3](https://github.com/roborox/focal-react/compare/v2.1.2...v2.1.3) (2020-08-15)
+
+
+### Bug Fixes
+
+* fix Cache.getMap() ([9dda1a9](https://github.com/roborox/focal-react/commit/9dda1a9d684a018366d5f8f73353e6719eb69749))
+
 ## [2.1.2](https://github.com/roborox/focal-react/compare/v2.1.1...v2.1.2) (2020-08-04)
 
 
