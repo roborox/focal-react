@@ -11,10 +11,12 @@ import { range } from "../../test/utils/range"
 import { InfiniteListState, listStateIdle } from "./domain"
 import { Rx } from "../rx"
 
-const Renderable = ({ loader, state }: {
+type RenderableProps = {
 	loader: ListPartLoader<number, number>,
 	state: Atom<InfiniteListState<number, number>>
-}) => (
+}
+
+const Renderable = ({ loader, state }: RenderableProps) => (
 	<InfiniteList
 		state$={state}
 		error={(error, reload) => (

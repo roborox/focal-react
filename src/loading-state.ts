@@ -1,5 +1,6 @@
-import { Observable } from "rxjs"
-import { filter, first } from "rxjs/operators"
+import { Observable, of, concat } from "rxjs"
+import { filter, first, catchError } from "rxjs/operators"
+import { fromPromise } from "rxjs/internal-compatibility"
 
 export type LoadingStatusStatus = "idle" | "success" | "loading" | "error"
 
@@ -61,17 +62,28 @@ export function mapLoadingState<F, T>(mapper: (value: F) => T): (state: LoadingS
 	}
 }
 
-export async function getFinalValue<T>(state$: Observable<LoadingState<T>>) {
+export async function getFinalValue<T>(state$: Observable<LoadingState<T>>): Promise<T> {
 	const result = await state$.pipe(
 		filter(x => x.status === "error" || x.status === "success"),
 		first(),
 	).toPromise()
 	switch (result.status) {
-		case "error":
+		case "error": {
 			return Promise.reject(result.error)
-		case "success":
+		}
+		case "success": {
 			return Promise.resolve(result.value)
-		default:
+		}
+		default: {
 			throw new Error("Never happens")
+		}
 	}
+}
+
+export function loadingStateFromPromise<T>(load: () => Promise<T>): Observable<LoadingState<T>> {
+	return concat(
+		of(createLoadingStateLoading<T>()),
+		fromPromise(load().then(x => createLoadingStateSuccess(x)))
+			.pipe(catchError(x => of(createLoadingStateError<T>(x)))),
+	)
 }
