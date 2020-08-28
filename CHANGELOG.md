@@ -1,3 +1,10 @@
+## [2.2.1](https://github.com/roborox/focal-react/compare/v2.2.0...v2.2.1) (2020-08-28)
+
+
+### Bug Fixes
+
+* fix (revert) Loader component ([68dec15](https://github.com/roborox/focal-react/commit/68dec15cb30dd7f329eee1c78a03456b0cf48c4f))
+
 # [2.2.0](https://github.com/roborox/focal-react/compare/v2.1.3...v2.2.0) (2020-08-28)
 
 
