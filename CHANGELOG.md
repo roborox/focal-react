@@ -1,3 +1,10 @@
+# [2.2.0](https://github.com/roborox/focal-react/compare/v2.1.3...v2.2.0) (2020-08-28)
+
+
+### Features
+
+* add 'loadingStateFromPromise' utility ([4dab0b6](https://github.com/roborox/focal-react/commit/4dab0b6b5729c632ebfa271acb8368bb0871f8bb))
+
 ## [2.1.3](https://github.com/roborox/focal-react/compare/v2.1.2...v2.1.3) (2020-08-15)
 
 
