@@ -55,10 +55,13 @@ export const createLoadingStateLoading = <T>(emptyValue?: T): LoadingState<T> =>
 export function mapLoadingState<F, T>(mapper: (value: F) => T): (state: LoadingState<F>) => LoadingState<T> {
 	return (state) => {
 		let value: T | undefined
-		if (state.value) {
+		if (state.value !== undefined) {
 			value = mapper(state.value)
 		}
-		return { ...state, value: value as T }
+		return {
+			...state,
+			value: value as T,
+		}
 	}
 }
 
