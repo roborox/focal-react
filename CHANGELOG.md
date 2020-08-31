@@ -1,3 +1,10 @@
+## [2.2.2](https://github.com/roborox/focal-react/compare/v2.2.1...v2.2.2) (2020-08-31)
+
+
+### Bug Fixes
+
+* fix mapLoadingState utility ([5b7c606](https://github.com/roborox/focal-react/commit/5b7c606cb535d031fc0e6569ef97958d8c96419a))
+
 ## [2.2.1](https://github.com/roborox/focal-react/compare/v2.2.0...v2.2.1) (2020-08-28)
 
 
